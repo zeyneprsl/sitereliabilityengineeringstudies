@@ -1,0 +1,33 @@
+groups:
+  - name: web-service-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{status=~"4..|5.."}[1m]))
+          /
+          sum(rate(http_requests_total[1m]))
+          > 0.01
+        for: 5s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Yüksek hata oranı tespit edildi"
+          description: "Son 1 dakikadaki 4xx/5xx hata oranı %1'in üzerinde. Oran: {{ $value | humanizePercentage }}"
+
+      - alert: ServiceDown
+        expr: up{job="web-service"} == 0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Web servisi çalışmıyor"
+          description: "Web servisi 5 saniyeden fazla süredir erişilemez durumda"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.001
+        for: 1s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Yüksek yanıt süresi"
+          description: "95. persentil yanıt süresi 0.001 saniyenin üzerinde: {{ $value }}s" 
