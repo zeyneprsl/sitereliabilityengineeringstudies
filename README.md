@@ -1,6 +1,7 @@
 # SRE Ödevi - Dockerize ve İzleme Sistemi
 
 Bu proje, Docker containerization ve monitoring konularında pratik yapmak amacıyla geliştirdiğim bir sistemdir. Basit bir Python web servisini Docker ile containerize ettim ve Prometheus + Grafana ile izleme sistemini kurdum.
+<img width="1067" height="578" alt="image" src="https://github.com/user-attachments/assets/9a6ffd75-9608-409f-b191-e75a43f1e3f3" />
 
 ## Proje Amacı
 
